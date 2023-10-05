@@ -2,3 +2,4 @@
 *.project
 .settings/*
 MANIFEST.MF
+*.class
