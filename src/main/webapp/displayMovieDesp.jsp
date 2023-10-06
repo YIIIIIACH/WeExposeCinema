@@ -14,7 +14,7 @@
 	 <h3>${ m.movieName }</h3><br>
 	 <p align="left" > ${ m.movieDescription }</p><br>
 	 <img src="${ m.movieImagePath }">
-	 <form method="get" action="/WeExpose/DisplayMovieDesp">
+	 <form method="get" action="/WeExpose/SearchShowing">
 	 <input name="movieId" value="${m.movieId }" style="display:none">
 	 <select name="cinemaId">
 		<c:forEach items="${cinemas}" var="c">

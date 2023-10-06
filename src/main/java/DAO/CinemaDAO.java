@@ -42,4 +42,29 @@ public class CinemaDAO {
 		}
 		return res;
 	}
+	
+	public static String getCinemaName(int cinemaId){
+		String res=null;
+		try {
+			Context context= new InitialContext();
+			DataSource ds = (DataSource)context.lookup("java:/comp/env/jdbc/servdb");
+			Connection conn = ds.getConnection();
+			PreparedStatement pstm = conn.prepareStatement("select * from cinema where cinemaId=?");
+			pstm.setInt(1, cinemaId);
+			ResultSet rs = pstm.executeQuery();
+			res = new String();
+			if( rs.next()) {
+				res+= rs.getString( "cinemaName");
+			}
+			rs.close();
+			pstm.close();
+			conn.close();
+			context.close();
+		}catch(NamingException e) {
+			e.printStackTrace();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
 }
