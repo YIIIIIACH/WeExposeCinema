@@ -12,28 +12,28 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import bean.CinemaBean;
-import bean.TheaterBean;
+import bean.MovieBean;
 
-public class TheaterDAO {
-	private static final String SEARCH_THEATER= " select * from theater where cinemaId_fk=?";
-	public static List<TheaterBean> searchTheater( CinemaBean cinema){
-		// will return all the theater in that cinema
-		List<TheaterBean> res = new ArrayList<TheaterBean>(); 
+public class MovieDAO {
+	private static final String GET_ALL_MOVIE_SQL = "select * from movie";
+	public static List<MovieBean> getAllMovie(){
+		List<MovieBean> res=null;
 		try {
 			Context context= new InitialContext();
 			DataSource ds = (DataSource)context.lookup("java:/comp/env/jdbc/servdb");
-			// get the list of theaterId of the cinemaId first;
 			Connection conn = ds.getConnection();
-			PreparedStatement pstm = conn.prepareStatement(SEARCH_THEATER);
-			pstm.setInt(1, cinema.getCinemaId());
+			PreparedStatement pstm = conn.prepareStatement(GET_ALL_MOVIE_SQL);
 			ResultSet rs = pstm.executeQuery();
+			res = new ArrayList<MovieBean>();
 			while( rs.next()) {
-				TheaterBean tmp = new TheaterBean();
-				tmp.setTheaterId(rs.getInt("theaterId"));
-				tmp.setTheaterName(rs.getString("theaterName"));
-				tmp.setCinemaId_fk(rs.getInt("cinemaId_fk"));
-				res.add(tmp);
+				MovieBean mb = new MovieBean();
+				mb.setMovieId(rs.getInt("movieId"));
+				mb.setMovieName(rs.getString("movieName"));
+				mb.setMovieGrade(rs.getString("movieGrade"));
+				mb.setMovieDuration(rs.getTime("movieDuration"));
+				mb.setMovieDescription(rs.getString("movieDescription"));
+				mb.setMovieImagePath(rs.getString("movieImagePath"));
+				res.add(mb);
 			}
 			rs.close();
 			pstm.close();

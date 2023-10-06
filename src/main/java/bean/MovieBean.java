@@ -1,11 +1,11 @@
 package bean;
 
-import java.sql.Date;
-
+//import java.sql.Date;
+import java.sql.Time;
 public class MovieBean {
 	private int movieId;
 	private String movieName;
-	private Date movieDuration;
+	private Time movieDuration;
 	private String movieGrade;
 	private String movieDescription;
 	private String movieImagePath;
@@ -21,10 +21,10 @@ public class MovieBean {
 	public void setMovieName(String movieName) {
 		this.movieName = movieName;
 	}
-	public Date getMovieDuration() {
+	public Time getMovieDuration() {
 		return movieDuration;
 	}
-	public void setMovieDuration(Date movieDuration) {
+	public void setMovieDuration(Time movieDuration) {
 		this.movieDuration = movieDuration;
 	}
 	public String getMovieGrade() {
