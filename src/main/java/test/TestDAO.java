@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import DAO.BookingDAO;
+import DAO.MemberDAO;
 import DAO.SeatDAO;
 import DAO.TheaterDAO;
 import DAO.TheaterDetailDAO;
@@ -34,12 +35,9 @@ public class TestDAO extends HttpServlet {
 //		for( TheaterBean t: theaterList) {
 //			out.write(t.getTheaterName()+ t.getTheaterId() + t.getCinemaId_fk());
 //		}
-		List<SeatBean> sb = BookingDAO.getBookedSeats(6);
-		
-		response.getWriter().print(sb.get(0).getSeatId() );
-		response.getWriter().print(" ");
-		response.getWriter().print(sb.get(0).getSeatColumn());
 
+		Boolean veri = MemberDAO.verifyAccount("kevin19990324", "kevinpassword");
+		response.getWriter().print(veri);
 	}
 
 }
