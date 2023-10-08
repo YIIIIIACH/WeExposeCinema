@@ -12,11 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import DAO.BookingDAO;
+import DAO.CinemaDAO;
 import DAO.MemberDAO;
+import DAO.MovieDAO;
 import DAO.OrdersDAO;
 import DAO.ProductDAO;
 import DAO.ProductServiceDAO;
 import DAO.SeatDAO;
+import DAO.TheaterDAO;
 import bean.ProductBean;
 import bean.SeatBean;
 /**
@@ -59,6 +62,14 @@ public class BookingSeatsAndMakeOrder extends HttpServlet {
 			//5. create booking for selected seats;
 			BookingDAO.createBooking(productServiceId, showingId, seatId, "booked");
 		}
+		
+		//showingId -> movieName, movieDuration and theaterName -> cinemaName
+		// seatList 
+		request.setAttribute("cinema", CinemaDAO.getCinemaNameWithShowingId(showingId));
+		request.setAttribute("theater", TheaterDAO.getTheater(showingId));
+		request.setAttribute("movie", MovieDAO.getShowingMovie(showingId));
+		request.setAttribute("seatList", sbList);
+		request.setAttribute("product", pb);
 		request.getRequestDispatcher("/bookingSuccess.jsp").forward(request, response);
 	}
 	

@@ -15,6 +15,9 @@ import javax.sql.DataSource;
 
 public class CinemaDAO {
 	public static final String GET_ALL_CINEMA_SQL = "select * from cinema";
+	public static final String GET_CINEMA_ID_SQL = "select * from cinema where cinemaId in ("
+			+" select cinemaId_fk from theater where theaterId in ("
+			+" select theaterId_fk from showing where showingId =?))";
 	public static List<CinemaBean> getAllCinema(){
 		List<CinemaBean> res=null;
 		try {
@@ -55,6 +58,33 @@ public class CinemaDAO {
 			res = new String();
 			if( rs.next()) {
 				res+= rs.getString( "cinemaName");
+			}
+			rs.close();
+			pstm.close();
+			conn.close();
+			context.close();
+		}catch(NamingException e) {
+			e.printStackTrace();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	public static CinemaBean getCinemaNameWithShowingId(int showingId){
+		CinemaBean res=null;
+		try {
+			Context context= new InitialContext();
+			DataSource ds = (DataSource)context.lookup("java:/comp/env/jdbc/servdb");
+			Connection conn = ds.getConnection();
+			PreparedStatement pstm = conn.prepareStatement(GET_CINEMA_ID_SQL);
+			pstm.setInt(1, showingId);
+			ResultSet rs = pstm.executeQuery();
+			res = new CinemaBean();
+			if( rs.next()) {
+				res.setCinemaName (rs.getString( "cinemaName"));
+				res.setCinemaId(rs.getInt("cinemaId"));
+				res.setCinemaLocation(rs.getString("cinemaLocation"));
 			}
 			rs.close();
 			pstm.close();

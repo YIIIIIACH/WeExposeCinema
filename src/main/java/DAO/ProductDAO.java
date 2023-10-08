@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 import bean.ProductBean;
 
 public class ProductDAO {
-	private static final String GETPRODUCT_SQL= "select productId , productPricing from product where productId in (select 	productId_fk from showingType where showingTypeId in( select showingTypeId_fk from showing where showingId = ?))";
+	private static final String GETPRODUCT_SQL= "select productId , productName ,productPricing from product where productId in (select 	productId_fk from showingType where showingTypeId in( select showingTypeId_fk from showing where showingId = ?))";
 	public static ProductBean getProduct( int showingId) {
 		ProductBean pb = null;
 		try {
@@ -26,6 +26,7 @@ public class ProductDAO {
 			if(rs.next()) {
 				pb= new ProductBean();
 				pb.setProductId(rs.getInt("productId"));
+				pb.setProductName(rs.getString("productName"));
 				pb.setProductPricing(rs.getInt("productPricing"));
 			}
 			rs.close();
