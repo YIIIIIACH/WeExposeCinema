@@ -12,9 +12,11 @@
      <h1>Seats layout</h1>
     <div id="modal" class="modal"></div>
     <div>
-    
-    	<input id="seatsStr" type="text" style="display:none" value="[]">
-    	<button id="bookBtn" >訂票</button>
+    	<form action="/WeExpose/Booking" method="post">
+    		<input type="text" name="showingId" value="${showingId }">
+    		<input id="seatsStr" type="text" name="seatsStr" style="display:none" value="[]">
+    		<button id="bookBtn" >訂票</button>    	
+    	</form>
     
     </div>
     

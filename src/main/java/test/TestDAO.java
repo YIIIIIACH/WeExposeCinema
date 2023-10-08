@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import DAO.BookingDAO;
 import DAO.MemberDAO;
+import DAO.OrdersDAO;
 import DAO.SeatDAO;
 import DAO.TheaterDAO;
 import DAO.TheaterDetailDAO;
@@ -36,8 +37,8 @@ public class TestDAO extends HttpServlet {
 //			out.write(t.getTheaterName()+ t.getTheaterId() + t.getCinemaId_fk());
 //		}
 
-		Boolean veri = MemberDAO.verifyAccount("kevin19990324", "kevinpassword");
-		response.getWriter().print(veri);
+		//Boolean veri = MemberDAO.verifyAccount("kevin19990324", "kevinpassword");
+		response.getWriter().print( OrdersDAO.createOrder(4));
 	}
 
 }

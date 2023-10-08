@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 
 public class MemberDAO {
 	private static final String VERIFY_ACC_SQL = "select * from member where memberAccount=? and memberPassword=?";
+	private static final String MEMBERID_SQL = " select memberId from member where memberAccount=? and memberPassword=?";
 	public static Boolean verifyAccount(String account, String password){
 		Boolean res= false;
 		try {
@@ -25,6 +26,31 @@ public class MemberDAO {
 			ResultSet rs = pstm.executeQuery();
 			if( rs.next()) {
 				res = true;
+			}
+			rs.close();
+			pstm.close();
+			conn.close();
+			context.close();
+		}catch(NamingException e) {
+			e.printStackTrace();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	public static Integer getMemberId( Integer acc ,Integer pwd) {
+		int res =- 1;
+		try {
+			Context context= new InitialContext();
+			DataSource ds = (DataSource)context.lookup("java:/comp/env/jdbc/servdb");
+			Connection conn = ds.getConnection();
+			PreparedStatement pstm = conn.prepareStatement(MEMBERID_SQL);
+			pstm.setInt(1, acc);
+			pstm.setInt(2, pwd);
+			ResultSet rs = pstm.executeQuery();
+			if( rs.next()) {
+				res = rs.getInt("memberId");
 			}
 			rs.close();
 			pstm.close();

@@ -17,6 +17,7 @@ import bean.SeatBean;
 public class BookingDAO {
 	private static final String GET_BOOKED_SEAT_SQL="select * from seat where seatId in ("
 			+ "	select seatId_fk from booking where bookingStatus='booked' and showingId_fk= ? )";
+	private static final String CREATE_BOOKING_SQL = " insert into booking values(?,?,?,'booked')";
 	public static List<SeatBean> getBookedSeats(int showingId){
 		List<SeatBean> res=null;
 		try {
@@ -39,6 +40,24 @@ public class BookingDAO {
 			pstm.close();
 			conn.close();
 			context.close();
+		}catch(NamingException e) {
+			e.printStackTrace();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	public static int createBooking( Integer productServiceId , Integer showingId, Integer seatId) {
+		int res=-1;
+		try {
+			Context context= new InitialContext();
+			DataSource ds = (DataSource)context.lookup("java:/comp/env/jdbc/servdb");
+			Connection conn = ds.getConnection();
+			PreparedStatement pstm = conn.prepareStatement(CREATE_BOOKING_SQL);
+			pstm.setInt(1, productServiceId);
+			pstm.setInt(2, showingId);
+			pstm.setInt(3, seatId);
 		}catch(NamingException e) {
 			e.printStackTrace();
 		}catch(SQLException e) {
