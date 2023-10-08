@@ -8,7 +8,7 @@
 </head>
 <body>
 <div align="center">
-<form method="get" action="/WeExpose/Login" style="margin:80px 200px">
+<form method="post" action="/WeExpose/Login" style="margin:80px 200px">
 	<input type="text" name="nextPath" style="display:none" value="${nextPath }">
 	<input type="text" name="showingId" style="display:none" value="${showingId }"/>
 	<div>
