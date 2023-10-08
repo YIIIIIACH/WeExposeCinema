@@ -13,7 +13,7 @@
     <div id="modal" class="modal"></div>
     <div>
     	<form action="/WeExpose/Booking" method="post">
-    		<input type="text" name="showingId" value="${showingId }">
+    		<input type="text" name="showingId" value="${showingId }" style="display:none">
     		<input id="seatsStr" type="text" name="seatsStr" style="display:none" value="[]">
     		<button id="bookBtn" >訂票</button>    	
     	</form>

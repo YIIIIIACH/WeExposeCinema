@@ -17,7 +17,7 @@ import bean.SeatBean;
 public class BookingDAO {
 	private static final String GET_BOOKED_SEAT_SQL="select * from seat where seatId in ("
 			+ "	select seatId_fk from booking where bookingStatus='booked' and showingId_fk= ? )";
-	private static final String CREATE_BOOKING_SQL = " insert into booking values(?,?,?,'booked')";
+	private static final String CREATE_BOOKING_SQL = " insert into booking values(?,?,?,?)";
 	public static List<SeatBean> getBookedSeats(int showingId){
 		List<SeatBean> res=null;
 		try {
@@ -48,7 +48,7 @@ public class BookingDAO {
 		return res;
 	}
 	
-	public static int createBooking( Integer productServiceId , Integer showingId, Integer seatId) {
+	public static int createBooking( Integer productServiceId , Integer showingId, Integer seatId,String status) {
 		int res=-1;
 		try {
 			Context context= new InitialContext();
@@ -58,6 +58,8 @@ public class BookingDAO {
 			pstm.setInt(1, productServiceId);
 			pstm.setInt(2, showingId);
 			pstm.setInt(3, seatId);
+			pstm.setString(4, status);
+			res = pstm.executeUpdate();
 		}catch(NamingException e) {
 			e.printStackTrace();
 		}catch(SQLException e) {

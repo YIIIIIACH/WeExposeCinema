@@ -39,15 +39,15 @@ public class MemberDAO {
 		return res;
 	}
 	
-	public static Integer getMemberId( Integer acc ,Integer pwd) {
+	public static Integer getMemberId( String acc ,String pwd) {
 		int res =- 1;
 		try {
 			Context context= new InitialContext();
 			DataSource ds = (DataSource)context.lookup("java:/comp/env/jdbc/servdb");
 			Connection conn = ds.getConnection();
 			PreparedStatement pstm = conn.prepareStatement(MEMBERID_SQL);
-			pstm.setInt(1, acc);
-			pstm.setInt(2, pwd);
+			pstm.setString(1, acc);
+			pstm.setString(2, pwd);
 			ResultSet rs = pstm.executeQuery();
 			if( rs.next()) {
 				res = rs.getInt("memberId");

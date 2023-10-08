@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import DAO.BookingDAO;
 import DAO.MemberDAO;
 import DAO.OrdersDAO;
 import DAO.ProductDAO;
@@ -36,8 +37,8 @@ public class BookingSeatsAndMakeOrder extends HttpServlet {
 			request.getRequestDispatcher("/DisplayMovieDesp").forward(request, response);
 			return;
 		}
-		Integer acc = Integer.valueOf((String)sess.getAttribute("account"));
-		Integer pwd =  Integer.valueOf((String)sess.getAttribute("password"));
+		String acc = (String)sess.getAttribute("account");
+		String pwd =  (String)sess.getAttribute("password");
 		// 1. create oder
 		Integer MemberId = MemberDAO.getMemberId(acc, pwd);
 		if( MemberId<=0 ) {
@@ -48,6 +49,7 @@ public class BookingSeatsAndMakeOrder extends HttpServlet {
 		Integer OrderId = OrdersDAO.createOrder(MemberId);  
 		// 2. get the productId and productPricing  
 		ProductBean pb = ProductDAO.getProduct(showingId);
+//		System.out.println(pb.getProductId()+ pb.getProductName()+pb.getProductPricing()+pb.getProductType());
 		List<SeatBean> sbList = parseSeatsString( seatsStr, showingId);
 		for( SeatBean sb : sbList) {
 			//3 .use productId and productPricing to insert  productService 
@@ -55,7 +57,9 @@ public class BookingSeatsAndMakeOrder extends HttpServlet {
 			//4. use showingId and  selectedRow , selectedColumn to get the seatId;
 			Integer seatId = SeatDAO.getSeatId(showingId, sb.getSeatRow(), sb.getSeatColumn());
 			//5. create booking for selected seats;
+			BookingDAO.createBooking(productServiceId, showingId, seatId, "booked");
 		}
+		request.getRequestDispatcher("/bookingSuccess.jsp").forward(request, response);
 	}
 	
 	
@@ -68,6 +72,7 @@ public class BookingSeatsAndMakeOrder extends HttpServlet {
 			tmp.setSeatRow(Integer.valueOf(s[0]));
 			tmp.setSeatColumn(Integer.valueOf(s[1]));
 			SeatDAO.getSeatId(showingId, Integer.valueOf(s[0]), Integer.valueOf(s[1]) );
+			sb.add(tmp);
 		}
 		return sb;
 	}
