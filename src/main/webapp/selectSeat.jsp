@@ -11,12 +11,30 @@
 <body>
      <h1>Seats layout</h1>
     <div id="modal" class="modal"></div>
+    <div>
+    
+    	<input id="seatsStr" type="text" style="display:none" value="[]">
+    	<button id="bookBtn" >訂票</button>
+    
+    </div>
     
 </body>
 <script src="js/selectSeats.js"></script>
 <script>
 	let seatLayout = { ${seatsString} };
 	let bookedSeats = [ ${bookedSeats}];
+	let selectedSeats = [];
+	document.getElementById('bookBtn').addEventListener('click',()=>{
+		let str='';
+		// refresh seatsStr from selectedSeats[];
+		for( let i=0; i<selectedSeats.length ; i++){
+			str+= selectedSeats[i][0]+ '-' + selectedSeats[i][1] ;
+			if( i+1 < selectedSeats.length){
+				str += ',';
+			}
+		}
+		document.getElementById('seatsStr').setAttribute("value",str);
+	});
     let modal = document.getElementById('modal');
     var modal_page={
     'modal': modal,
@@ -78,10 +96,18 @@
                     	;
                     }else if( st.status == 'unbooked'){
                     	st.status = 'selected';
+                    	// push row col to selectedSeats;
+                    	selectedSeats.push([row, col]);
                     }
                     else if ( st.status== 'selected'){
                     	st.status = 'unbooked';
-                    	
+                    	// find it in selectedSeats; and splic( i,1);
+                    	for( let i=0; i< selectedSeats.length; i++){
+                    		if( selectedSeats[i][0]==row && selectedSeats[i][1]==col){
+                    			selectedSeats.splice( i, 1);
+                    			break;
+                    		}
+                    	}
                     }
                     modal_page.refreshUI();
                     modal_page.setSeatEventListener();
