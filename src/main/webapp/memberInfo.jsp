@@ -16,12 +16,14 @@
 	<div >
 		<form action="/WeExpose/EditMember" method="post">
 		<fieldset>
-		<legend>會員資料</legend><label>會員帳號</label><input name="account" disabled value="${mb.memberAccount }"/>
+		<legend>會員資料</legend>
+		${requestScope.message }
+		<label>會員帳號</label><input name="account" value="${mb.memberAccount }"/>
 		<label>會員密碼</label><input name="password" value="" >
 		</fieldset>
 		<fieldset>
 		<label>會員姓名</label><input name="memberName" value="${mb.memberName }"/>
-		<label>會員等級</label><input name="memberGrade" value="${mb.memberGrade }">
+		<label>會員等級</label><input name="memberGrade" disabled value="${mb.memberGrade }">
 		</fieldset>
 		<fieldset  >
 		<button type="submit">修改</button>

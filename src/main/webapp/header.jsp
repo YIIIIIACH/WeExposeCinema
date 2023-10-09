@@ -4,7 +4,7 @@
 <header align="right" style="margin:20px 0px;background-color: #33D1FF ">
 <a href="/WeExpose/DisplayMovieDesp"><span>首頁</span></a>
 <span >歡迎</span>
-<c:if test="${sessionScope.memberName==null}">貴賓</c:if>${sessionScope.memberName}
+<c:if test="${sessionScope.memberName==null}">訪客</c:if>${sessionScope.memberName}
 <c:if test="${sessionScope.memberGrade!=null}">會員等級${sessionScope.memberGrade}</c:if>
 <a href="/WeExpose/MemberInfo"><span>會員專區</span></a>
 <c:if test="${sessionScope.memberName!=null}">
