@@ -11,6 +11,7 @@
 <form method="post" action="/WeExpose/Login" style="margin:80px 200px">
 	<input type="text" name="nextPath" style="display:none" value="${nextPath }">
 	<input type="text" name="showingId" style="display:none" value="${showingId }"/>
+	<h3>${ requestScope.message }</h3>
 	<div>
 	<label>LOG IN</label><input type="text" name="acc">
 	</div>

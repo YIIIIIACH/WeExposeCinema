@@ -17,6 +17,7 @@ public class MemberDAO {
 	private static final String VERIFY_ACC_SQL = "select * from member where memberAccount=? and memberPassword=?";
 	private static final String MEMBERID_SQL = " select memberId from member where memberAccount=? and memberPassword=?";
 	private static final String MEMBER_SQL = " select * from member where memberAccount=? and memberPassword=?";
+	private static final String CREATE_MEMBER_SQL="insert into member values( ? , ? , ? , ?,?)";
 	public static Boolean verifyAccount(String account, String password){
 		Boolean res= false;
 		try {
@@ -100,6 +101,29 @@ public class MemberDAO {
 			e.printStackTrace();
 		}catch(SQLException e) {
 			e.printStackTrace();
+		}
+		return res;
+	}
+	public static Integer register( String acc, String pwd, String memberName, Integer age) {
+		int res =- 1;
+		try {
+			Context context= new InitialContext();
+			DataSource ds = (DataSource)context.lookup("java:/comp/env/jdbc/servdb");
+			Connection conn = ds.getConnection();
+			PreparedStatement pstm = conn.prepareStatement(CREATE_MEMBER_SQL);
+			pstm.setString(1, acc);
+			pstm.setString(2, memberName);
+			pstm.setString(3, "普通");
+			pstm.setInt(4, age);
+			pstm.setString(5, pwd);
+			res = pstm.executeUpdate();
+			pstm.close();
+			conn.close();
+			context.close();
+		}catch(NamingException e) {
+			e.printStackTrace();
+		}catch(SQLException e) {
+			return -2; // -2 means have duplicate account;
 		}
 		return res;
 	}

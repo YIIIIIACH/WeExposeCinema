@@ -8,7 +8,7 @@
 </head>
 <body>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<div><span><a href="http://localhost:8080/WeExpose/MemberInfo"> 會員專區</a></span></div>
+<jsp:include page="header.jsp"></jsp:include>
 <c:forEach items="${movies}" var="m">
 	<div align="center" style="width:600px">
 	 <h3>${ m.movieName }</h3><br>

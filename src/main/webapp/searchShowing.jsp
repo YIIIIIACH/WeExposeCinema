@@ -9,6 +9,7 @@
 </head>
 <body>
 	<div>
+	<jsp:include page="header.jsp"></jsp:include>
 	<c:forEach items="${showes}" var="sh" varStatus="s">
 		<h4>第${s.count}場次</h4>
 		<a href="http://localhost:8080/WeExpose/AvailableSeats?showingId=${sh.showingId }" target="_blank">${sh.showingDatetime}</a>

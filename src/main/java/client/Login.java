@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import DAO.MemberDAO;
+import bean.MemberBean;
 
 /**
  * Servlet implementation class Login
@@ -25,6 +26,10 @@ public class Login extends HttpServlet {
 		String showingId = request.getParameter("showingId");
 		String acc = request.getParameter("acc");
 		String pwd = request.getParameter("pwd");
+		if(acc==null || pwd==null) {
+			request.getRequestDispatcher("/login.jsp").forward(request, response);	
+			return;
+		}
 		
 		
 		if( MemberDAO.verifyAccount(acc, pwd)) {
@@ -38,11 +43,15 @@ public class Login extends HttpServlet {
 				HttpSession sess = request.getSession();
 				sess.setAttribute("account", acc);
 				sess.setAttribute("password", pwd);
+				MemberBean mb = MemberDAO.getMemberBean(acc, pwd);
+				sess.setAttribute("memberName", mb.getMemberName());
+				sess.setAttribute("memberGrade", mb.getMemberGrade());
 				request.setAttribute("showingId", showingId);
 				request.getRequestDispatcher(nextPath).forward(request, response);
 			}
 		}
 		else {
+			request.setAttribute("message","invalid account or wrong password");
 			request.getRequestDispatcher("/login.jsp").forward(request, response);			
 		}
 	}
