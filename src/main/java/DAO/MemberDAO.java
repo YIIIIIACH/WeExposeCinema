@@ -10,10 +10,13 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import bean.MemberBean;
+
 
 public class MemberDAO {
 	private static final String VERIFY_ACC_SQL = "select * from member where memberAccount=? and memberPassword=?";
 	private static final String MEMBERID_SQL = " select memberId from member where memberAccount=? and memberPassword=?";
+	private static final String MEMBER_SQL = " select * from member where memberAccount=? and memberPassword=?";
 	public static Boolean verifyAccount(String account, String password){
 		Boolean res= false;
 		try {
@@ -51,6 +54,43 @@ public class MemberDAO {
 			ResultSet rs = pstm.executeQuery();
 			if( rs.next()) {
 				res = rs.getInt("memberId");
+			}
+			rs.close();
+			pstm.close();
+			conn.close();
+			context.close();
+		}catch(NamingException e) {
+			e.printStackTrace();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	public static MemberBean getMemberBean( String acc, String pwd) {
+		if( acc==null || pwd==null) {
+			return null;
+		}
+		if( acc.length()<=0 || pwd.length()<= 0) {
+			return null;
+		}
+		MemberBean res = null;
+		try {
+			Context context= new InitialContext();
+			DataSource ds = (DataSource)context.lookup("java:/comp/env/jdbc/servdb");
+			Connection conn = ds.getConnection();
+			PreparedStatement pstm = conn.prepareStatement(MEMBER_SQL);
+			pstm.setString(1, acc);
+			pstm.setString(2, pwd);
+			ResultSet rs = pstm.executeQuery();
+			if( rs.next()) {
+				res = new MemberBean();
+				res.setMemberId(rs.getInt("memberId"));
+				res.setMemberAccount(rs.getString("memberAccount"));
+				res.setMemberName(rs.getNString("memberName"));
+				res.setMemberGrade(rs.getString("memberGrade"));
+				res.setMemberAge(rs.getInt("memberAge"));
+				res.setMemberPassword(rs.getString("memberPassword"));
 			}
 			rs.close();
 			pstm.close();

@@ -18,6 +18,11 @@ public class CinemaDAO {
 	public static final String GET_CINEMA_ID_SQL = "select * from cinema where cinemaId in ("
 			+" select cinemaId_fk from theater where theaterId in ("
 			+" select theaterId_fk from showing where showingId =?))";
+	private static final String GET_CINEMA_BY_BOOKING = 
+			" select * from cinema where cinemaId in("
+			+"	select cinemaId_fk from theater where theaterId in ("
+				+"select theaterId_fk from showing where showingId in ("
+					+"select showingId_fk from booking where bookingId = ?)))";
 	public static List<CinemaBean> getAllCinema(){
 		List<CinemaBean> res=null;
 		try {
@@ -96,5 +101,32 @@ public class CinemaDAO {
 			e.printStackTrace();
 		}
 		return res;
+	}
+	public static CinemaBean getCinemaByBooking(int bookingId) {
+		//GET_CINEMA_BY_BOOKING
+		CinemaBean cb = null;
+		try {
+			Context context= new InitialContext();
+			DataSource ds = (DataSource)context.lookup("java:/comp/env/jdbc/servdb");
+			Connection conn = ds.getConnection();
+			PreparedStatement pstm = conn.prepareStatement(GET_CINEMA_BY_BOOKING);
+			pstm.setInt(1, bookingId);
+			ResultSet rs = pstm.executeQuery();
+			cb = new CinemaBean();
+			if( rs.next()) {
+				cb.setCinemaName (rs.getString( "cinemaName"));
+				cb.setCinemaId(rs.getInt("cinemaId"));
+				cb.setCinemaLocation(rs.getString("cinemaLocation"));
+			}
+			rs.close();
+			pstm.close();
+			conn.close();
+			context.close();
+		}catch(NamingException e) {
+			e.printStackTrace();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return cb;
 	}
 }

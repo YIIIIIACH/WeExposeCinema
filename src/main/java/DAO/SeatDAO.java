@@ -23,6 +23,7 @@ public class SeatDAO {
 			"select seatId  from seat where theaterId_fk in ("
 			+ "		select theaterId_fk from showing where showingId = ?"
 			+ "	) and seatRow = ? and seatColumn = ?";
+	private static final String SEAT_SQL = " select * from seat where seatId in ( select seatId_fk from booking where bookingId=?)";
 	public static List<SeatBean> searchSeat(int showingId){
 		List<SeatBean> seatList = new ArrayList<SeatBean>();
 		try {
@@ -67,6 +68,35 @@ public class SeatDAO {
 			
 			if( rs.next()) {
 				res = rs.getInt("seatId");
+			}
+			rs.close();
+			pstm.close();
+			conn.close();
+			context.close();
+		}catch(NamingException e) {
+			e.printStackTrace();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	public static SeatBean getSeat( Integer bookingId) {
+		SeatBean res = null;
+		try {
+			Context context= new InitialContext();
+			DataSource ds = (DataSource)context.lookup("java:/comp/env/jdbc/servdb");
+			Connection conn = ds.getConnection();
+			PreparedStatement pstm = conn.prepareStatement(SEAT_SQL);
+			pstm.setInt(1, bookingId);
+			ResultSet rs = pstm.executeQuery();
+			
+			if( rs.next()) {
+				res = new SeatBean();
+				res.setSeatId( rs.getInt("seatId"));
+				res.setTheaterId_fk(rs.getInt("theaterId_fk"));
+				res.setSeatRow(rs.getInt("seatRow"));
+				res.setSeatColumn(rs.getInt("seatColumn"));
 			}
 			rs.close();
 			pstm.close();
