@@ -34,6 +34,13 @@ public class BookingSeatsAndMakeOrder extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		String seatsStr = request.getParameter("seatsStr");
 		Integer showingId = Integer.valueOf( request.getParameter("showingId"));
+		List<SeatBean> sbList = parseSeatsString( seatsStr, showingId);
+		for( SeatBean sb: sbList) {
+			if( BookingDAO.checkBookingValid(sb.getSeatId(), showingId)==false) {
+				request.getRequestDispatcher("/bookingFailed").forward(request,response);
+				return;
+			}
+		}
 		HttpSession sess = request.getSession();
 		if( sess.getAttribute("account")==null || sess.getAttribute("password")==null) {
 			
@@ -53,7 +60,6 @@ public class BookingSeatsAndMakeOrder extends HttpServlet {
 		// 2. get the productId and productPricing  
 		ProductBean pb = ProductDAO.getProduct(showingId);
 //		System.out.println(pb.getProductId()+ pb.getProductName()+pb.getProductPricing()+pb.getProductType());
-		List<SeatBean> sbList = parseSeatsString( seatsStr, showingId);
 		for( SeatBean sb : sbList) {
 			//3 .use productId and productPricing to insert  productService 
 			Integer productServiceId = ProductServiceDAO.createProductSerivce(OrderId, pb);
@@ -83,7 +89,7 @@ public class BookingSeatsAndMakeOrder extends HttpServlet {
 			SeatBean tmp = new SeatBean();
 			tmp.setSeatRow(Integer.valueOf(s[0]));
 			tmp.setSeatColumn(Integer.valueOf(s[1]));
-			SeatDAO.getSeatId(showingId, Integer.valueOf(s[0]), Integer.valueOf(s[1]) );
+			tmp.setSeatId( SeatDAO.getSeatId(showingId, Integer.valueOf(s[0]), Integer.valueOf(s[1]) ));
 			sb.add(tmp);
 		}
 		return sb;

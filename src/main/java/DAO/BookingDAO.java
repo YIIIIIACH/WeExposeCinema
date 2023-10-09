@@ -21,6 +21,7 @@ public class BookingDAO {
 	private static final String CREATE_BOOKING_SQL = " insert into booking values(?,?,?,?)";
 	private static final String GET_BOOKING_BY_ORDER_SQL = "select * from booking where productServiceId_fk in ("
 			+ "select productServiceId from productService where orderId_fk = ?)";
+	private static final String CHECK_BOOKING_VALID_SQL = "select * from booking where showingId_fk=? and seatId_fk=?";
 	public static List<SeatBean> getBookedSeats(int showingId){
 		List<SeatBean> res=null;
 		try {
@@ -98,6 +99,7 @@ public class BookingDAO {
 //			for( BookingBean bb: res) {
 //				System.out.println(bb.getBookingId());
 //			}
+			rs.close();
 			pstm.close();
 			conn.close();
 			context.close();
@@ -108,4 +110,33 @@ public class BookingDAO {
 		}
 		return res;
 	}
+	//CHECK_BOOKING_VALID_SQL
+	public static Boolean checkBookingValid( Integer showingId, Integer seatId) {
+		Boolean res=false;
+		try {
+			Context context= new InitialContext();
+			DataSource ds = (DataSource)context.lookup("java:/comp/env/jdbc/servdb");
+			Connection conn = ds.getConnection();
+			PreparedStatement pstm = conn.prepareStatement(CHECK_BOOKING_VALID_SQL );
+			pstm.setInt(1, showingId);
+			pstm.setInt(2, seatId);
+			ResultSet rs = pstm.executeQuery();
+			if( rs.next() ) {
+				res=false;
+			}
+			else{
+				res=true;
+			}
+			rs.close();
+			pstm.close();
+			conn.close();
+			context.close();
+		}catch(NamingException e) {
+			e.printStackTrace();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
 }

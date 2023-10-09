@@ -5,11 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>threat seats</title>
+    <title>電影廳院空位</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-     <h1>Seats layout</h1>
+     <h1>電影廳院空位</h1>
     <div id="modal" class="modal"></div>
     
 </body>

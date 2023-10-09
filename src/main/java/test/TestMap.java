@@ -19,15 +19,17 @@ public class TestMap {
 //		for( HashMap.Entry<Integer, String> t : hm.entrySet()) {
 //			System.out.println( t.getKey()+ " "+ t.getValue());
 //		}
-		String str = "2023-10-09 14:30:20.000";
-        DateFormat format = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss.sss");
-        try {
-			Date date = format.parse(str);
-			System.out.printf( "%tY-%tm-%td %tH:%tM:%tS",date,date,date,date,date,date,date);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		String str = "2023-10-09 14:30:20.000";
+//        DateFormat format = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss.sss");
+//        try {
+//			Date date = format.parse(str);
+//			System.out.printf( "%tY-%tm-%td %tH:%tM:%tS",date,date,date,date,date,date,date);
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		Date d = new Date();
+		System.out.println(d);
 	}	
 
 }

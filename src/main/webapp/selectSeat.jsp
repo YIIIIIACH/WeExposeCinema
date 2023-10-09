@@ -5,11 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>threat seats</title>
+    <title>電影廳院院座位</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-     <h1>Seats layout</h1>
+     <h1>請選擇您要預定的位置</h1>
     <div id="modal" class="modal"></div>
     <div>
     	<form action="/WeExpose/Booking" method="post">
