@@ -8,11 +8,20 @@
 <title>Booking Success</title>
 </head>
 <body>
-<h2>congratulation you booked successfully</h2>
+<jsp:include page="header.jsp"></jsp:include>
+<div style="margin:20px 20%" align="center">
+
+<h2>訂位成功</h2>
 <!--  cinema theater movie product seatList -->
-<div><span>${cinema.cinemaName }</span><span>${theater.theaterName }</span><span>${movie.movieName }</span></div>
+<table>
+<tr><td><span>${cinema.cinemaName }</span><td><span>${theater.theaterName }</span><td><span>${movie.movieName }</span>
+<td><form action="/WeExpose/CallOfOrder" method="get"><input type="text" name="orderId" value="${orderId }" style="display:none"><button type="submit">取消交易</button></form>
 <c:forEach items="${seatList}" var="seat">
-	<div><span>第${seat.seatRow }排</span><span>第${seat.seatColumn }列</span><span>小計${product.productPricing }</span></div>
+	<tr align="right"><td><span>第${seat.seatRow }排</span><td><span>第${seat.seatColumn }列</span><td><span>小計${product.productPricing }</span>
 </c:forEach>
+</table>
+<a href="http://localhost:8080/WeExpose/DisplayMovieDesp"><div width="80" height="40"><span>回首頁</span></div></a>
+<a href="http://localhost:8080/WeExpose/MemberInfo"><div width="80" height="40"><span>會員專區</span></div></a>
+</div>
 </body>
 </html>

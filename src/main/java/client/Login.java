@@ -33,6 +33,12 @@ public class Login extends HttpServlet {
 		
 		
 		if( MemberDAO.verifyAccount(acc, pwd)) {
+			HttpSession sess = request.getSession();
+			sess.setAttribute("account", acc);
+			sess.setAttribute("password", pwd);
+			MemberBean mb = MemberDAO.getMemberBean(acc, pwd);
+			sess.setAttribute("memberName", mb.getMemberName());
+			sess.setAttribute("memberGrade", mb.getMemberGrade());
 			if(nextPath== null){
 				response.sendRedirect("/WeExpose/DisplayMovieDesp");
 			}
@@ -40,17 +46,14 @@ public class Login extends HttpServlet {
 				response.sendRedirect("/WeExpose/DisplayMovieDesp");
 			}else {
 				// store session;
-				HttpSession sess = request.getSession();
-				sess.setAttribute("account", acc);
-				sess.setAttribute("password", pwd);
-				MemberBean mb = MemberDAO.getMemberBean(acc, pwd);
-				sess.setAttribute("memberName", mb.getMemberName());
-				sess.setAttribute("memberGrade", mb.getMemberGrade());
+				request.setAttribute("nextPath", nextPath);
 				request.setAttribute("showingId", showingId);
 				request.getRequestDispatcher(nextPath).forward(request, response);
 			}
 		}
 		else {
+			request.setAttribute("nextPath", nextPath);
+			request.setAttribute("showingId", showingId);
 			request.setAttribute("message","invalid account or wrong password");
 			request.getRequestDispatcher("/login.jsp").forward(request, response);			
 		}

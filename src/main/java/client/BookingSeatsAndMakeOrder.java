@@ -65,6 +65,7 @@ public class BookingSeatsAndMakeOrder extends HttpServlet {
 		
 		//showingId -> movieName, movieDuration and theaterName -> cinemaName
 		// seatList 
+		request.setAttribute("orderId", OrderId);
 		request.setAttribute("cinema", CinemaDAO.getCinemaNameWithShowingId(showingId));
 		request.setAttribute("theater", TheaterDAO.getTheater(showingId));
 		request.setAttribute("movie", MovieDAO.getShowingMovie(showingId));

@@ -33,11 +33,17 @@
 	<div>
 	<h2>${mb.memberName }的購買紀錄</h2>
 	<table>
+	<% int subtotalCnt=0; %>
 	<!--  movieName cinemaName theaterName showingDatetime showintTypeName  -->
 	<% for( MemberOrderInfo of: (List<MemberOrderInfo>)request.getAttribute("orderInfoes") ){
 		%>
 		<tr><td><%= of.movie.getMovieName() %><td><%= of.theater.getTheaterName()%><td><%= of.showing.getShowingDatetime() %><td><%= of.showingType.getShowingTypeName() %>
-		
+		<% subtotalCnt=0; 
+		for( int i=0; i< of.seats.size() ; i++){%>
+		<tr><td><td>第<%=of.seats.get(i).getSeatRow() %>排<td>第<%=of.seats.get(i).getSeatColumn() %>位<td>單票價格<%= of.productServices.get(i).getProductServicePrice() %> 
+		<% subtotalCnt += of.productServices.get(i).getProductServicePrice();
+		}%>
+		<tr><td><td><td><td><label>小計<%= subtotalCnt %>元</label>
 	<% }%>
 
 	</table>
