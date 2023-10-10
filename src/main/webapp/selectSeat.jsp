@@ -6,19 +6,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>電影廳院院座位</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	<div sytle="margin: 20px 20%">
-     <h1>請選擇您要預定的位置</h1>
-    <div id="modal" class="modal"></div>
+	<jsp:include page="header.jsp"></jsp:include>
+	<div style="margin: 20px 0%">
+    <h1>請選擇您要預定的位置</h1>
+    <div id="theater" class="theater"></div>
     <div>
     	<form action="/WeExpose/Booking" method="post">
     		<input type="text" name="showingId" value="${showingId }" style="display:none">
     		<input id="seatsStr" type="text" name="seatsStr" style="display:none" value="[]">
     		<button id="bookBtn" >訂票</button>    	
     	</form>
-    
     </div>
     </div>
 </body>
@@ -38,7 +42,7 @@
 		}
 		document.getElementById('seatsStr').setAttribute("value",str);
 	});
-    let modal = document.getElementById('modal');
+    let modal = document.getElementById('theater');
     var modal_page={
     'modal': modal,
     'modal_content': [],// modal_content consits of string of html

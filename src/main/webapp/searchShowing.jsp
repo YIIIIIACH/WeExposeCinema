@@ -6,6 +6,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <meta charset="UTF-8">
 <title><c:out value="WeEpose ${cinemaName}場次" default="WeExpose 電影院場次"/></title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
@@ -13,8 +16,7 @@
 	<div style="display:flex;flex-direction: row;flex-wrap:wrap">
 	<form action="SearchShowing" method="get"><input type="text" style="display:none" name="movieId" value="${ movieId }">
 	<input type="text" style="display:none" name="cinemaId" value="${ cinemaId }">
-	<label>搜索放映日期</label><input name="selectDate" type="date" value="${selectDate }"><label>場次類型</label>
-	<select name="selectShowingType"><option value="none">NONE</option></select><button type="submit">搜索</button></form>
+	<label>搜索放映日期</label><input name="selectDate" type="date" value="${selectDate }"><button type="submit">搜索</button></form>
 	<div style="margin:0px 0px;width:100%" ><span style="font-size:30px">${cinemaName}</span></div>
 	<c:forEach items="${showes}" var="sh" varStatus="s">
 		<div style="background-color:pink;margin:20px 20px;width:180px;text-align:center" >

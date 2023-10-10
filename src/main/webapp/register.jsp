@@ -5,8 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>註冊會員</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
+<jsp:include page="header.jsp"></jsp:include>
 <div style="padding: 20px 30%">
 <div>
 <form action="/WeExpose/Register" method="post">

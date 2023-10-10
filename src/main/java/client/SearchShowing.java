@@ -24,7 +24,7 @@ public class SearchShowing extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int cinemaId= Integer.valueOf(request.getParameter("cinemaId"));
 		int movieId = Integer.valueOf(request.getParameter("movieId"));
-		String dStr = (String)request.getParameter("selectDate");
+		String dStr = request.getParameter("selectDate");
 		if(dStr != null ){
 			List<ShowingBean> showingList = null;
 			if( dStr.length()>0) {

@@ -8,13 +8,19 @@
 <%! @SuppressWarnings("unchecked") %>
 <meta charset="UTF-8">
 <title>會員專區</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<div style="padding:20px 20%">
 	<jsp:include page="header.jsp"></jsp:include>
-	
+	<div style="margin:20px 20%">
 	<div >
-		<form action="/WeExpose/EditMember" method="post">
+		<ul class="nav nav-tabs">
+		    <li id="mDataBtn"><a><span>會員基本資料</span></a></li>
+		    <li id="mOrderBtn"><a><span>購買紀錄</span></a></li>
+	  	</ul>
+		<form action="/WeExpose/EditMember" method="post" id='mDataForm'>
 		<fieldset>
 		<legend>會員資料</legend>
 		${requestScope.message }
@@ -30,7 +36,7 @@
 		</fieldset>
 		</form>
 	</div>
-	<div>
+	<div id="mOrder" style="display:none">
 	<h2>${mb.memberName }的購買紀錄</h2>
 	<table>
 	<% int subtotalCnt=0; %>
@@ -49,5 +55,15 @@
 	</table>
 	</div>
 	</div>
+	<script>
+	document.getElementById('mDataBtn').addEventListener('click',()=>{
+		document.getElementById('mDataForm').style.display= "block";
+		document.getElementById('mOrder').style.display= "none";
+	});
+	document.getElementById('mOrderBtn').addEventListener('click',()=>{
+		document.getElementById('mDataForm').style.display= "none";
+		document.getElementById('mOrder').style.display= "block";
+	});
+	</script>
 </body>
 </html>
