@@ -30,11 +30,7 @@ public class MemberInfo extends HttpServlet {
 		}else {
 			// get MemberBean by account and password;
 			MemberBean mb = MemberDAO.getMemberBean((String)sess.getAttribute("account"), (String)sess.getAttribute("password"));
-			// get all order from MemberId
-			// get all productService  and booking from from orderId 
-			// produdctService - > booking -> showing -> theater- > cinema
-			//											-> movie
-			//								-> seat
+
 			List<MemberOrderInfo> orderInfoes = new ArrayList< MemberOrderInfo>();
 			List<OrdersBean> obList = (mb==null)? new ArrayList<OrdersBean>():OrdersDAO.getOrders( mb.getMemberId() );
 			if (obList !=null) {
@@ -73,6 +69,8 @@ public class MemberInfo extends HttpServlet {
 					}
 				}
 				request.setAttribute("orderInfoes", orderInfoes);
+			}else {
+				System.out.println("obList is null");
 			}
 			request.setAttribute("mb", mb);
 			request.getRequestDispatcher("/memberInfo.jsp").forward(request,response);

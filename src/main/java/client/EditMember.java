@@ -20,7 +20,7 @@ public class EditMember extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// account password memberName memberGrade
 		request.setCharacterEncoding("UTF-8");
-		int resStat = MemberDAO.editMember(request.getParameter("account"),request.getParameter("password"), request.getParameter("memberName"),(String)request.getSession().getAttribute("account"));
+		int resStat = MemberDAO.editMember(request.getParameter("account"),request.getParameter("password"), request.getParameter("memberName"),(String)request.getSession().getAttribute("account"),(String)request.getSession().getAttribute("password"));
 		if(resStat<0) {
 			// exception;
 			request.setAttribute("message", "edit failed");
@@ -32,7 +32,15 @@ public class EditMember extends HttpServlet {
 			HttpSession sess= request.getSession();
 			sess.setAttribute("memberName", request.getParameter("memberName"));
 			sess.setAttribute("account", request.getParameter("account")); //update acc sess and pwd sess
-			sess.setAttribute("password", request.getParameter("password"));
+			if( request.getParameter("account")!=null) {
+				if( request.getParameter("account").length()>0)
+					request.setAttribute("account", request.getParameter("account"));
+			}
+			if( request.getParameter("password")!=null) {
+				if( request.getParameter("password").length()>0)
+					sess.setAttribute("password", request.getParameter("password"));
+			}
+			request.setAttribute("password", request.getParameter("password"));
 		}
 		request.getRequestDispatcher("/MemberInfo").forward(request, response);
 	}

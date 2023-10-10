@@ -6,3 +6,6 @@ MANIFEST.MF
 *.jar
 Test.java
 EmpBean.java
+*.jpg
+*.jpeg
+*.png
