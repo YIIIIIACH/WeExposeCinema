@@ -1,6 +1,8 @@
 package client;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -28,13 +30,17 @@ public class SearchShowing extends HttpServlet {
 			if( dStr.length()>0) {
 				showingList =ShowingDAO.advanceSearchShowing(movieId, cinemaId, dStr);
 			}else {
-				showingList = ShowingDAO.searchShowing(movieId, cinemaId);
+				//sdFormat.format(current)
+				dStr= new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+				showingList = ShowingDAO.advanceSearchShowing(movieId, cinemaId, dStr);
 			}
 			request.setAttribute("showes", showingList);
-		}else {			
-			List<ShowingBean> showingList = ShowingDAO.searchShowing(movieId, cinemaId);
+		}else {		
+			dStr= new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+			List<ShowingBean> showingList = ShowingDAO.advanceSearchShowing(movieId, cinemaId, dStr);
 			request.setAttribute("showes", showingList);
 		}
+		request.setAttribute("selectDate", dStr);
 		request.setAttribute("cinemaName", CinemaDAO.getCinemaName(cinemaId));
 		request.setAttribute("cinemaId", cinemaId);
 		request.setAttribute("movieId", movieId);

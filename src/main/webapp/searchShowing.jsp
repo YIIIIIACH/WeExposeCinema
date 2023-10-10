@@ -13,7 +13,7 @@
 	<div style="display:flex;flex-direction: row;flex-wrap:wrap">
 	<form action="SearchShowing" method="get"><input type="text" style="display:none" name="movieId" value="${ movieId }">
 	<input type="text" style="display:none" name="cinemaId" value="${ cinemaId }">
-	<label>搜索放映日期</label><input name="selectDate" type="date"><label>場次類型</label>
+	<label>搜索放映日期</label><input name="selectDate" type="date" value="${selectDate }"><label>場次類型</label>
 	<select name="selectShowingType"><option value="none">NONE</option></select><button type="submit">搜索</button></form>
 	<div style="margin:0px 0px;width:100%" ><span style="font-size:30px">${cinemaName}</span></div>
 	<c:forEach items="${showes}" var="sh" varStatus="s">
