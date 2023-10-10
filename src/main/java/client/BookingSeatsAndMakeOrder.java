@@ -59,7 +59,6 @@ public class BookingSeatsAndMakeOrder extends HttpServlet {
 		Integer OrderId = OrdersDAO.createOrder(MemberId);  
 		// 2. get the productId and productPricing  
 		ProductBean pb = ProductDAO.getProduct(showingId);
-//		System.out.println(pb.getProductId()+ pb.getProductName()+pb.getProductPricing()+pb.getProductType());
 		for( SeatBean sb : sbList) {
 			//3 .use productId and productPricing to insert  productService 
 			Integer productServiceId = ProductServiceDAO.createProductSerivce(OrderId, pb);

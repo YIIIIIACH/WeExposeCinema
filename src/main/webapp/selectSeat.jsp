@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+	<div sytle="margin: 20px 20%">
      <h1>請選擇您要預定的位置</h1>
     <div id="modal" class="modal"></div>
     <div>
@@ -19,7 +20,7 @@
     	</form>
     
     </div>
-    
+    </div>
 </body>
 <script src="js/selectSeats.js"></script>
 <script>

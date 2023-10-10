@@ -9,9 +9,10 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+	<div style="margin: 20px 20%">
      <h1>電影廳院空位</h1>
     <div id="modal" class="modal"></div>
-    
+    </div>
 </body>
 <script src="js/threaterSeats.js"></script>
 <script>

@@ -37,6 +37,10 @@ public class Login extends HttpServlet {
 			sess.setAttribute("account", acc);
 			sess.setAttribute("password", pwd);
 			MemberBean mb = MemberDAO.getMemberBean(acc, pwd);
+			if( mb==null) {
+				response.sendRedirect("/WeExpose/DisplayMovieDesp");
+				return;
+			}
 			sess.setAttribute("memberName", mb.getMemberName());
 			sess.setAttribute("memberGrade", mb.getMemberGrade());
 			if(nextPath== null){

@@ -62,7 +62,6 @@ public class OrdersDAO {
 			while( rs.next()) {
 				OrdersBean ob = new OrdersBean();
 				ob.setOrderId(rs.getInt("orderId"));
-//				System.out.println("has set order "+ ob.getOrderId());
 				ob.setMemberId_fk(rs.getInt("memberId_fk"));
 				ob.setOrderStatus(rs.getString("orderStatus"));
 				obList.add(ob);

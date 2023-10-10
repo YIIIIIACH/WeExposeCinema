@@ -8,8 +8,8 @@
 <title><c:out value="WeEpose ${cinemaName}場次" default="WeExpose 電影院場次"/></title>
 </head>
 <body>
-	<div style="padding:50px 20%">
 	<jsp:include page="header.jsp"></jsp:include>
+	<div style="padding:50px 20%">
 	<div style="display:flex;flex-direction: row;flex-wrap:wrap">
 	<form action="SearchShowing" method="get"><input type="text" style="display:none" name="movieId" value="${ movieId }">
 	<input type="text" style="display:none" name="cinemaId" value="${ cinemaId }">

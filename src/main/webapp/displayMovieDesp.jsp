@@ -4,11 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>All Movies</title>
+<title>WeExpose 電影院</title>
 </head>
 <body>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="header.jsp"></jsp:include>
+<div style="margin:20px 20%">
 <c:forEach items="${movies}" var="m">
 	<div align="center" style="width:600px">
 	 <h3>${ m.movieName }</h3><br>
@@ -26,5 +27,6 @@
 	 
  	</div>
 </c:forEach>
+</div>
 </body>
 </html>

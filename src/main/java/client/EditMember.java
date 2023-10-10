@@ -30,6 +30,7 @@ public class EditMember extends HttpServlet {
 		}else {
 			//success
 			HttpSession sess= request.getSession();
+			sess.setAttribute("memberName", request.getParameter("memberName"));
 			sess.setAttribute("account", request.getParameter("account")); //update acc sess and pwd sess
 			sess.setAttribute("password", request.getParameter("password"));
 		}

@@ -36,7 +36,7 @@ public class MemberInfo extends HttpServlet {
 			//											-> movie
 			//								-> seat
 			List<MemberOrderInfo> orderInfoes = new ArrayList< MemberOrderInfo>();
-			List<OrdersBean> obList = OrdersDAO.getOrders( mb.getMemberId() );
+			List<OrdersBean> obList = (mb==null)? new ArrayList<OrdersBean>():OrdersDAO.getOrders( mb.getMemberId() );
 			if (obList !=null) {
 				for( OrdersBean ob : obList) {
 					// get all booking by order
@@ -46,7 +46,7 @@ public class MemberInfo extends HttpServlet {
 					MovieBean mvb = null;
 					CinemaBean cb = null;
 					ShowingBean sb = null;
-					TheaterBean tb = null;
+//					TheaterBean tb = null;
 					
 					if(bbList.size()>0) {
 						mvb = MovieDAO.getMovieByBooking(bbList.get(0).getBookingId());

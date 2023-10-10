@@ -89,16 +89,12 @@ public class BookingDAO {
 			while( rs.next()) {
 				BookingBean bb = new BookingBean();
 				bb.setBookingId(rs.getInt("bookingId"));
-//				System.out.println("set booking"+" "+bb.getBookingId());
 				bb.setProductServiceId_fk(rs.getInt("productServiceId_fk"));
 				bb.setSeatId_fk(rs.getInt("seatId_fk"));
 				bb.setShowingId_fk(rs.getInt("showingId_fk"));
 				bb.setBookingStatus(rs.getString("bookingStatus"));
 				res.add(bb);
 			}
-//			for( BookingBean bb: res) {
-//				System.out.println(bb.getBookingId());
-//			}
 			rs.close();
 			pstm.close();
 			conn.close();

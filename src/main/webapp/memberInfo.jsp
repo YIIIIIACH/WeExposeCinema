@@ -10,7 +10,7 @@
 <title>會員專區</title>
 </head>
 <body>
-	<div style="padding:20px 100px">
+	<div style="padding:20px 20%">
 	<jsp:include page="header.jsp"></jsp:include>
 	
 	<div >
