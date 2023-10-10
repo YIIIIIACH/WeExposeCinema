@@ -53,14 +53,14 @@
 	<!--  movieName cinemaName theaterName showingDatetime showintTypeName  -->
 	<% for( MemberOrderInfo of: (List<MemberOrderInfo>)request.getAttribute("orderInfoes") ){
 		%>
-		<div><a href="#_<%=cnt %>_seats" data-toggle="collapse"><label><%= of.movie.getMovieName() %><%= of.theater.getTheaterName()%><%= of.showing.getShowingDatetime() %><%= of.showingType.getShowingTypeName() %></label></a></div>
-		<table id="_<%=cnt %>_seats" class="collapse in">
+		<div><a href="#_<%=cnt %>_seats" data-toggle="collapse"><label><%= of.movie.getMovieName() %><%= of.theater.getTheaterName()%><%= of.showing.getShowingDatetimeFormated() %><%= of.showingType.getShowingTypeName() %></label></a></div>
+		<ul id="_<%=cnt %>_seats" class="collapse in">
 		<% subtotalCnt=0; 
 		for( int i=0; i< of.seats.size() ; i++){%>
-		<tr><td><td>第<%=of.seats.get(i).getSeatRow() %>排<td>第<%=of.seats.get(i).getSeatColumn() %>位<td>單票價格<%= of.productServices.get(i).getProductServicePrice() %> 
+		<li>第<%=of.seats.get(i).getSeatRow() %>排<%="\t"%>第<%=of.seats.get(i).getSeatColumn() %>位<%="\t"%>單票價格<%= of.productServices.get(i).getProductServicePrice() %> 
 		<% subtotalCnt += of.productServices.get(i).getProductServicePrice();
 		}%>
-		</table>
+		</ul>
 		<div align="right"><label align="right">小計<%= subtotalCnt %>元</label></div>
 	<% 
 	cnt++;

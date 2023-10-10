@@ -23,10 +23,10 @@ public class EditMember extends HttpServlet {
 		int resStat = MemberDAO.editMember(request.getParameter("account"),request.getParameter("password"), request.getParameter("memberName"),(String)request.getSession().getAttribute("account"),(String)request.getSession().getAttribute("password"));
 		if(resStat<0) {
 			// exception;
-			request.setAttribute("message", "edit failed");
+			request.setAttribute("message", "編輯會員資料失敗");
 		}else if(resStat==0){
 			// edit failed
-			request.setAttribute("message", "can not find account");
+			request.setAttribute("message", "無法找尋到帳號");
 		}else {
 			//success
 			HttpSession sess= request.getSession();

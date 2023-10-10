@@ -1,5 +1,7 @@
 package bean;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ShowingBean {
@@ -27,6 +29,17 @@ public class ShowingBean {
 	}
 	public void setShowingDatetime(Date showingDatetime) {
 		this.showingDatetime = showingDatetime;
+	}
+	public String getShowingDatetimeFormated() {
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm").format( this.showingDatetime);
+	}
+	public void setShowingDatetimeFormated(String showingDatetimeStr) {
+		try {
+			this.showingDatetime = new SimpleDateFormat("yyyy-MM-dd HH-mm").parse(showingDatetimeStr);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public int getShowingTypeId_fk() {
 		return showingTypeId_fk;

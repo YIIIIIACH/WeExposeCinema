@@ -14,15 +14,17 @@
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-	<div style="margin: 20px 0%">
-    <h1>請選擇您要預定的位置</h1>
+	<div style="margin: 0px 0%"> 
+	<div style="margin: 7% 20%">
+    <h4 align="center">請選擇您要預定的位置</h4>
     <div id="theater" class="theater"></div>
     <div>
     	<form action="/WeExpose/Booking" method="post">
     		<input type="text" name="showingId" value="${showingId }" style="display:none">
     		<input id="seatsStr" type="text" name="seatsStr" style="display:none" value="[]">
-    		<button id="bookBtn" >訂票</button>    	
+    		<button style="margin: 0px 80% 0px 15%" type="submit" id="bookBtn" class="btn btn-primary">訂票</button>	
     	</form>
+    </div>
     </div>
     </div>
 </body>

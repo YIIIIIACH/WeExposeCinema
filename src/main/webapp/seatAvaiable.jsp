@@ -12,9 +12,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<div style="margin: 20px 20%">
-     <h1>電影廳院空位</h1>
+	<div style="margin: 10% 20%">
+	<div>
+     <h4 style="margin: 10px 40%">電影廳院空位</h4>
     <div id="modal" class="theater"></div>
+    </div>
     </div>
 </body>
 <script src="js/threaterSeats.js"></script>

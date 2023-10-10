@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.*,bean.*"%>
+    pageEncoding="UTF-8" import="java.util.*,bean.*,java.text.SimpleDateFormat"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,25 +9,42 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<%! @SuppressWarnings("deprecation")%> 
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-	<div style="padding:50px 20%">
+	<div style="padding:50px 15%">
 	<div style="display:flex;flex-direction: row;flex-wrap:wrap">
 	<form action="SearchShowing" method="get"><input type="text" style="display:none" name="movieId" value="${ movieId }">
 	<input type="text" style="display:none" name="cinemaId" value="${ cinemaId }">
-	<label>搜索放映日期</label><input name="selectDate" type="date" value="${selectDate }"><button type="submit">搜索</button></form>
+	<label>放映日期</label><input name="selectDate" type="date" value="${selectDate }"><button type="submit">搜索</button></form>
 	<div style="margin:0px 0px;width:100%" ><span style="font-size:30px">${cinemaName}</span></div>
-	<c:forEach items="${showes}" var="sh" varStatus="s">
-		<div style="background-color:pink;margin:20px 20px;width:180px;text-align:center" >
-		<h4>第${s.count}場次</h4>
-		<a href="/WeExpose/AvailableSeats?showingId=${sh.showingId }" target="_blank">${sh.showingDatetime}</a>
+	<% 
+	String formatStr= "yyyy-MM-dd"; 
+	int idx= 0;
+	List<TheaterBean> tbList = new ArrayList<TheaterBean>();
+	if( request.getAttribute("theaters")!=null){
+		tbList = (List<TheaterBean>)request.getAttribute("theaters");
+	}
+	%>
+	<% for( ShowingBean sh : (List<ShowingBean>)request.getAttribute("showes")){ %>
+		<div style="background-color:#BBE7F6;padding:0px;height:110px;font-weight:double;margin:16px 16px;width:185px;text-align:center;border:5px solid #8DB4BF;border-radius:8px" >
+		<% String tStr= (tbList.size()>0)?tbList.get(idx++).getTheaterName():""; %>
+		<h5 ><%=tStr%></h5>
+		<a href="/WeExpose/AvailableSeats?showingId=<%=sh.getShowingId() %>" style="color:black;font-weight:bold" target="_blank"><%= sh.getShowingDatetimeFormated() %></a>
 		<form method="get" action="/WeExpose/SelectSeat">
-			<input type="text" style="display:none" value="${sh.showingId }" name="showingId">
-			<button type="submit">去訂位</button>
+			<input type="text" style="display:none" value="<%=sh.getShowingId() %>" name="showingId">
+			<% 
+			Date d = sh.getShowingDatetime();
+			if( d.compareTo(new Date())>=0 ) {
+			%>
+				<button type="submit" class="btn btn-primary" style="background-color:#518A9D">去訂位</button>
+			<%}else{ %>
+				<button type="submit" disabled class="btn btn-primary"style="background-color:#66A4B8">去訂位</button>
+			<%} %>
 		</form><br>
 		</div>
-	</c:forEach>
+	<%} %>
 	</div>
 	</div>
 </body>
