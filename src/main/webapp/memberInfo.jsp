@@ -22,17 +22,27 @@
 	  	</ul>
 		<form action="/WeExpose/EditMember" method="post" id='mDataForm'>
 		<fieldset>
-		<legend>會員資料</legend>
-		${requestScope.message }
-		<label>會員帳號</label><input name="account" value="${mb.memberAccount }"/>
-		<label>會員密碼</label><input name="password" value="" >
-		</fieldset>
-		<fieldset>
-		<label>會員姓名</label><input name="memberName" value="${mb.memberName }"/>
-		<label>會員等級</label><input name="memberGrade" disabled value="${mb.memberGrade }">
-		</fieldset>
-		<fieldset  >
-		<button type="submit">修改</button>
+		<legend ><label style="margin:25px auto 10px">會員資料</label></legend>
+		<c:if test="${ requestScope.message !=null }">${requestScope.message }</c:if>
+		<div class="input-group">
+			<span class="input-group-addon glyphicon glyphicon-user" > 帳號</span>
+			<input type="text" class="form-control" name="account" value="${mb.memberAccount }">
+		</div><br>
+		<div class="input-group">
+			<span class=" input-group-addon glyphicon glyphicon-lock" > 密碼</span>
+			<input type="password" class="form-control"  name="password">
+		</div><br>
+		<div class="input-group">
+			<span class="input-group-addon glyphicon glyphicon-sunglasses" > 姓名</span>
+			<input type="text" class="form-control" name="memberName" value="${mb.memberName }">
+		</div><br>
+		<div class="input-group">
+			<span class=" input-group-addon glyphicon glyphicon-king" > 等級</span>
+			<input type="text" class="form-control" name="memberGrade" disabled value="${mb.memberGrade }">
+		</div>
+		<div class="button-group" style="margin:20px 75% 0px 0px">
+			<button type="submit" class="btn btn-primary" style="width:100%">修改</button>		
+		</div>
 		</fieldset>
 		</form>
 	</div>

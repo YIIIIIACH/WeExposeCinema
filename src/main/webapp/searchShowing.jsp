@@ -21,7 +21,7 @@
 	<c:forEach items="${showes}" var="sh" varStatus="s">
 		<div style="background-color:pink;margin:20px 20px;width:180px;text-align:center" >
 		<h4>第${s.count}場次</h4>
-		<a href="http://localhost:8080/WeExpose/AvailableSeats?showingId=${sh.showingId }" target="_blank">${sh.showingDatetime}</a>
+		<a href="/WeExpose/AvailableSeats?showingId=${sh.showingId }" target="_blank">${sh.showingDatetime}</a>
 		<form method="get" action="/WeExpose/SelectSeat">
 			<input type="text" style="display:none" value="${sh.showingId }" name="showingId">
 			<button type="submit">去訂位</button>

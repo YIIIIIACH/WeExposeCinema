@@ -19,7 +19,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a><span>WeExpose 電影院</span></a></li>
+        <li><a href="/WeExpose/DisplayMovieDesp"><span>WeExpose 電影院</span></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
       <li><a href="/WeExpose/MemberInfo"><span>會員專區</span></a>
@@ -39,7 +39,6 @@
         	<li>
 	        	<a href="/WeExpose/LogOut">
 				<span class="glyphicon glyphicon-log-in"></span> 登出</a>
-				</a>
 			</li>
 		</c:if>
       </ul>

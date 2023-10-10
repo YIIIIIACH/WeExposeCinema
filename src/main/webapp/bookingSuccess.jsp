@@ -23,8 +23,8 @@
 	<tr align="right"><td><span>第${seat.seatRow }排</span><td><span>第${seat.seatColumn }列</span><td><span>小計${product.productPricing }</span>
 </c:forEach>
 </table>
-<a href="http://localhost:8080/WeExpose/DisplayMovieDesp"><div width="80" height="40"><span>回首頁</span></div></a>
-<a href="http://localhost:8080/WeExpose/MemberInfo"><div width="80" height="40"><span>會員專區</span></div></a>
+<a href="/WeExpose/DisplayMovieDesp"><div width="80" height="40"><span>回首頁</span></div></a>
+<a href="/WeExpose/MemberInfo"><div width="80" height="40"><span>會員專區</span></div></a>
 </div>
 </body>
 </html>

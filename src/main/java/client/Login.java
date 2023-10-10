@@ -58,7 +58,7 @@ public class Login extends HttpServlet {
 		else {
 			request.setAttribute("nextPath", nextPath);
 			request.setAttribute("showingId", showingId);
-			request.setAttribute("message","invalid account or wrong password");
+			request.setAttribute("message","無效帳號或密碼錯誤");
 			request.getRequestDispatcher("/login.jsp").forward(request, response);			
 		}
 	}
