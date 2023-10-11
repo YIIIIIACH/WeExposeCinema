@@ -30,10 +30,15 @@
 </body>
 <script src="js/selectSeats.js"></script>
 <script>
+	let selectCnt = 0;
 	let seatLayout = { ${seatsString} };
 	let bookedSeats = [ ${bookedSeats}];
 	let selectedSeats = [];
 	document.getElementById('bookBtn').addEventListener('click',()=>{
+		if( selectCnt<=0){
+			event.preventDefault();
+			return;
+		}
 		let str='';
 		// refresh seatsStr from selectedSeats[];
 		for( let i=0; i<selectedSeats.length ; i++){
@@ -89,6 +94,7 @@
     },
     'setBooked':function( bookedSeats){
         for( let i=0; i< bookedSeats.length; i++){
+        	
             let seatRow =this.threater.rows
             seatRow[ bookedSeats[i][0]-1].seatOf( bookedSeats[i][1]-1).status= "booked";
         }
@@ -106,10 +112,12 @@
                     }else if( st.status == 'unbooked'){
                     	st.status = 'selected';
                     	// push row col to selectedSeats;
+                    	selectCnt++;
                     	selectedSeats.push([row, col]);
                     }
                     else if ( st.status== 'selected'){
                     	st.status = 'unbooked';
+                    	selectCnt--;
                     	// find it in selectedSeats; and splic( i,1);
                     	for( let i=0; i< selectedSeats.length; i++){
                     		if( selectedSeats[i][0]==row && selectedSeats[i][1]==col){

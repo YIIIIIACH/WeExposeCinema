@@ -22,6 +22,9 @@ public class ProductServiceDAO {
 	private static final String GET_PRODUCT_SERVICE_BY_BOOKING_SQL = 
 			"select * from productService where productServiceId in("
 				+"select productServiceId_fk from booking where bookingId =? )";
+	private static final String GET_ADDED_PRODUCTSERVICE_BY_ORDERID_SQL = 
+			"select * from productService where productId_fk in("
+			+"select productId from product where productType='加購')";
 	public static int createProductSerivce( Integer orderId , ProductBean pb) {
 		int res =- 1;
 		try {

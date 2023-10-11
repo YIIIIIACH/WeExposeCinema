@@ -67,9 +67,12 @@ public class BookingSeatsAndMakeOrder extends HttpServlet {
 			//5. create booking for selected seats;
 			BookingDAO.createBooking(productServiceId, showingId, seatId, "booked");
 		}
-		
 		//showingId -> movieName, movieDuration and theaterName -> cinemaName
-		// seatList 
+		// seatList
+		
+		// setAttribute of ava add product
+		
+		request.setAttribute("addableProducts",ProductDAO.getAddedProduct());
 		request.setAttribute("orderId", OrderId);
 		request.setAttribute("cinema", CinemaDAO.getCinemaNameWithShowingId(showingId));
 		request.setAttribute("theater", TheaterDAO.getTheater(showingId));
@@ -83,13 +86,16 @@ public class BookingSeatsAndMakeOrder extends HttpServlet {
 	public static List<SeatBean> parseSeatsString(String seatsStr, Integer showingId){
 		List<SeatBean> sb = new ArrayList<SeatBean>();
 		String[] seats= seatsStr.split(",");
+		if(seats.length<=0) return sb;
 		for( String seat: seats) {
 			String[] s = seat.split("-");
-			SeatBean tmp = new SeatBean();
-			tmp.setSeatRow(Integer.valueOf(s[0]));
-			tmp.setSeatColumn(Integer.valueOf(s[1]));
-			tmp.setSeatId( SeatDAO.getSeatId(showingId, Integer.valueOf(s[0]), Integer.valueOf(s[1]) ));
-			sb.add(tmp);
+			if(s!=null && s[0]!="") {				
+				SeatBean tmp = new SeatBean();
+				tmp.setSeatRow(Integer.valueOf(s[0]));
+				tmp.setSeatColumn(Integer.valueOf(s[1]));
+				tmp.setSeatId( SeatDAO.getSeatId(showingId, Integer.valueOf(s[0]), Integer.valueOf(s[1]) ));
+				sb.add(tmp);
+			}
 		}
 		return sb;
 	}

@@ -3,6 +3,7 @@ package client;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import struct.MemberOrderInfo;
 
@@ -30,7 +31,6 @@ public class MemberInfo extends HttpServlet {
 		}else {
 			// get MemberBean by account and password;
 			MemberBean mb = MemberDAO.getMemberBean((String)sess.getAttribute("account"), (String)sess.getAttribute("password"));
-
 			List<MemberOrderInfo> orderInfoes = new ArrayList< MemberOrderInfo>();
 			List<OrdersBean> obList = (mb==null)? new ArrayList<OrdersBean>():OrdersDAO.getOrders( mb.getMemberId() );
 			if (obList !=null) {
@@ -38,7 +38,7 @@ public class MemberInfo extends HttpServlet {
 					// get all booking by order
 					MemberOrderInfo info = new MemberOrderInfo();
 					List<BookingBean> bbList = BookingDAO.getBookingByOrder(ob.getOrderId());
-					
+					List<ProductBean> addPbList = ProductDAO.getAddProductByOrderId(ob.getOrderId());
 					MovieBean mvb = null;
 					CinemaBean cb = null;
 					ShowingBean sb = null;
@@ -60,9 +60,11 @@ public class MemberInfo extends HttpServlet {
 						List<ProductServiceBean> psbList = new ArrayList<ProductServiceBean>();
 						for( BookingBean bb: bbList) {
 							// product service
-							psbList.add( ProductServiceDAO.getProductServiceByBooking(bb.getBookingId()));
+							ProductServiceBean psb =ProductServiceDAO.getProductServiceByBooking(bb.getBookingId()); 
+							psbList.add( psb);
 							sbList.add( SeatDAO.getSeat(bb.getBookingId()));
 						}
+						info.addedProduct = addPbList;
 						info.seats = sbList;
 						info.productServices= psbList;
 						orderInfoes.add(info);

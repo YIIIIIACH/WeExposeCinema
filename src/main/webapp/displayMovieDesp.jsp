@@ -51,12 +51,14 @@
 			 <img src="${ m.movieImagePath }">
 			 <form method="get" action="/WeExpose/SearchShowing">
 			 <input name="movieId" value="${m.movieId }" style="display:none">
-			 <select name="cinemaId"class="form-select" aria-label="Default select example">
+			 <div class="input-group">
+			 <select name="cinemaId"class="form-select form-control" aria-label="Default select example">
 				<c:forEach items="${cinemas}" var="c">
 					 <option value="${c.cinemaId }" > ${c.cinemaName }</option>
 				</c:forEach>
 			</select>
-			<input type="submit" value="搜尋場次" class="btn btn-info"/>
+			<input type="submit" value="搜尋場次" class="btn btn-default form-control"/>
+			</div>
 			</form>
 			 
 		 	</div>

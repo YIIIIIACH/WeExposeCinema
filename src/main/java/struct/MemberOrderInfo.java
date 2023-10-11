@@ -6,6 +6,7 @@ import bean.BookingBean;
 import bean.CinemaBean;
 import bean.MovieBean;
 import bean.OrdersBean;
+import bean.ProductBean;
 import bean.ProductServiceBean;
 import bean.SeatBean;
 import bean.ShowingBean;
@@ -22,4 +23,5 @@ public class MemberOrderInfo {
 	public List<ProductServiceBean> productServices;
 	public List< BookingBean> bookings;
 	public List< SeatBean> seats;
+	public List<ProductBean> addedProduct;
 }

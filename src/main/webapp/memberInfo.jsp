@@ -65,7 +65,12 @@
 		for( int i=0; i< of.seats.size() ; i++){%>
 		<li>第<%=of.seats.get(i).getSeatRow() %>排<%="\t"%>第<%=of.seats.get(i).getSeatColumn() %>位<%="\t"%>單票價格<%= of.productServices.get(i).getProductServicePrice() %> 
 		<% subtotalCnt += of.productServices.get(i).getProductServicePrice();
-		}%>
+		}
+		for(int i=0; i<of.addedProduct.size(); i++){
+		%>
+		<li><%=of.addedProduct.get(i).getProductName()+"\t餐點價格\t"+of.addedProduct.get(i).getProductPricing()+"元" %>
+		<% subtotalCnt+= of.addedProduct.get(i).getProductPricing(); %>
+		<%} %>
 		</ul>
 		<div align="right"><label align="right">小計<%= subtotalCnt %>元</label></div>
 	<% 
@@ -86,6 +91,9 @@
 	function validateMyForm(){
 		let p = document.getElementById('pwd').value;
 		// need number , upper and lower character , at least 4
+		if( p==''){
+			return true;
+		}
 		if( /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{4,}$/.test(p)){
 			return true;
 		}
