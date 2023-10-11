@@ -11,6 +11,10 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style>
+.warn-message{
+	display:none;
+}</style>
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
@@ -20,7 +24,7 @@
 		    <li id="mDataBtn"><a><span>會員基本資料</span></a></li>
 		    <li id="mOrderBtn"><a><span>購買紀錄</span></a></li>
 	  	</ul>
-		<form action="/WeExpose/EditMember" method="post" id='mDataForm'>
+		<form action="/WeExpose/EditMember" method="post" id='mDataForm' onsubmit="validateMyForm()">
 		<fieldset>
 		<legend ><label style="margin:25px auto 10px">會員資料</label></legend>
 		<c:if test="${ requestScope.message !=null }">${requestScope.message }</c:if>
@@ -30,7 +34,7 @@
 		</div><br>
 		<div class="input-group">
 			<span class=" input-group-addon glyphicon glyphicon-lock" > 密碼</span>
-			<input type="password" class="form-control"  name="password">
+			<input type="password" class="form-control" id="pwd" name="password">
 		</div><br>
 		<div class="input-group">
 			<span class="input-group-addon glyphicon glyphicon-sunglasses" > 姓名</span>
@@ -43,6 +47,7 @@
 		<div class="button-group" style="margin:20px 75% 0px 0px">
 			<button type="submit" class="btn btn-primary" style="width:100%">修改</button>		
 		</div>
+		<label id="invalidPwdMessage" class="warn-message">密碼至少需要一個數字符一個大小寫英文且長度須大於四</label>
 		</fieldset>
 		</form>
 	</div>
@@ -77,6 +82,16 @@
 		document.getElementById('mDataForm').style.display= "none";
 		document.getElementById('mOrder').style.display= "block";
 	});
+	function validateMyForm(){
+		let p = document.getElementById('pwd').value;
+		// need number , upper and lower character , at least 4
+		if( /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{4,}$/.test(p)){
+			return true;
+		}
+		document.getElementById('invalidPwdMessage').style.display= "block";
+		event.preventDefault();
+		return false;
+	}
 	</script>
 </body>
 </html>

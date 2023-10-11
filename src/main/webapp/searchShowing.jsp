@@ -14,10 +14,17 @@
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
 	<div style="padding:50px 15%">
-	<div style="display:flex;flex-direction: row;flex-wrap:wrap">
-	<form action="SearchShowing" method="get"><input type="text" style="display:none" name="movieId" value="${ movieId }">
+	<form action="SearchShowing" method="get" style="clear:right;width:100%">
+	<input type="text" style="display:none" name="movieId" value="${ movieId }">
 	<input type="text" style="display:none" name="cinemaId" value="${ cinemaId }">
-	<label>放映日期</label><input name="selectDate" type="date" value="${selectDate }"><button type="submit">搜索</button></form>
+	<fieldset style="clear:right;width:100%">
+	<div class="input-group" style="clear:right;width:100%;padding-bottom:20px">
+		<i class="input-group-addon glyphicon glyphicon-user" style="width:20%">放映日期</i>
+		<input name="selectDate" class="form-control" type="date" style="width:60%" value="${selectDate }"/><input type="submit" class="btn btn-default" value="搜尋" style="width:20%;height:100%" >
+	</div>
+	</fieldset>
+	</form>
+	<div style="display:flex;flex-direction: row;flex-wrap:wrap">
 	<div style="margin:0px 0px;width:100%" ><span style="font-size:30px">${cinemaName}</span></div>
 	<% 
 	String formatStr= "yyyy-MM-dd"; 
