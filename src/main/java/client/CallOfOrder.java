@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import DAO.OrdersDAO;
+
 /**
  * Servlet implementation class CallOfOrder
  */
@@ -15,8 +17,11 @@ public class CallOfOrder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath()+"call off order");
+		//need orderId
+		request.setCharacterEncoding("UTF-8");
+		Integer orderId = Integer.valueOf( (request.getParameter("orderId")!=null)?request.getParameter("orderId"):"0");
+		OrdersDAO.deleteBookingProductService(orderId);
+		request.getRequestDispatcher("/MemberInfo").forward(request, response);
 	}
 
 

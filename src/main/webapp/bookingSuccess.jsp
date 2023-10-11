@@ -30,7 +30,7 @@ margin: 20px 20px;
 <!--  cinema theater movie product seatList -->
 <table>
 <tr><td><label class="testLabel">${cinema.cinemaName }&nbsp;&nbsp;&nbsp;&nbsp;</label><td><label class="testLabel">${theater.theaterName }&nbsp;&nbsp;&nbsp;&nbsp;</label><td><label class="testLabel">${movie.movieName }&nbsp;&nbsp;&nbsp;&nbsp;</label>
-<td><form action="/WeExpose/CallOfOrder" method="get"><input type="text" name="orderId" value="${orderId }" style="display:none"><button type="submit" class="btn btn-outline-secondary">取消交易</button></form>
+<td><form action="/WeExpose/CallOfOrder?orderId=${orderId}" method="get"><input type="text" name="orderId" value="${orderId }" style="display:none"><button type="submit" class="btn btn-outline-secondary">取消交易</button></form>
 <c:forEach items="${seatList}" var="seat">
 	<tr align="right"><td><span>第${seat.seatRow }排</span><td><span>第${seat.seatColumn }列</span><td><span>小計${product.productPricing }</span>
 </c:forEach>
