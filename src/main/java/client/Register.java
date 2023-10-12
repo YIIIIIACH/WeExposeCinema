@@ -40,7 +40,7 @@ public class Register extends HttpServlet {
 			request.getRequestDispatcher("/MemberInfo").forward(request, response);
 		}else if(resStat == -2) {
 			response.setContentType("text/html;charset=UTF-8");
-			response.getWriter().print("重複的帳號或非法的密碼");
+			//response.getWriter().print("重複的帳號或非法的密碼");
 			request.getRequestDispatcher("/register.jsp").include(request, response);
 		}
 		else {
