@@ -18,8 +18,8 @@ public class TestDAO extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ShowingBean sb = ShowingDAO.getShowinByBooking(4);
-		response.getWriter().write(sb.getShowingDatetime().toString());
+		ShowingDAO.addShowing(5, 14, "2023-10-12","11:11:00.000" ,8);
+		response.getWriter().write("res");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
