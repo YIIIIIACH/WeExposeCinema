@@ -231,7 +231,7 @@ public class ShowingDAO {
 	}
 	
 	
-	public static List<LocalDateTime[]> getShowingStEnd(Integer theaterId, String dateStr, String timeStr , List<String> movieNameList) {
+	public static List<LocalDateTime[]> getShowingStEnd(Integer theaterId, String dateStr,  List<String> movieNameList) {
 		int res=-1; // -1 means no Success;
 		// 1. check no conflict
 		// 1-1 get set of interval on specific showing start time and end time;
@@ -256,11 +256,11 @@ public class ShowingDAO {
 				// rs.getInt("movieId");
 				InnerLoop: for( int i=0; i< mbList.size(); i++) {
 					if( rs.getInt("movieId")== mbList.get(i).getMovieId()) {
-						Time dur = MovieDAO.getMovie(mbList.get(i).getMovieId()).getMovieDuration();
-						LocalDateTime added = LocalDateTime.parse(dateStr+"T"+timeStr , DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-						LocalDateTime addedEnd = added.plusHours(dur.getHours());
-						addedEnd.plusMinutes(dur.getMinutes());
-						addedEnd.plusSeconds(dur.getSeconds());
+//						Time dur = MovieDAO.getMovie(mbList.get(i).getMovieId()).getMovieDuration();
+//						LocalDateTime added = LocalDateTime.parse(dateStr+"T"+timeStr , DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+//						LocalDateTime addedEnd = added.plusHours(dur.getHours());
+//						addedEnd.plusMinutes(dur.getMinutes());
+//						addedEnd.plusSeconds(dur.getSeconds());
 						movieNameList.add(mbList.get(i).getMovieName());
 						timeIntervals.add(tmp);
 						break InnerLoop;

@@ -13,7 +13,8 @@
 <fieldset>
 <legend>場次搜尋</legend>
 <label>theater</label>
-<select name="movieId">
+<select name="addedMovieId">
+<option value="-1" >None</option>
 <c:forEach items="${allMovies }" var="m">
 <option value="${m.movieId }">
 ${m.movieName }</option>
@@ -21,7 +22,7 @@ ${m.movieName }</option>
 </select>
 <select name="theaterId">
 <c:forEach items="${allTheaters }" var="t">
-<option value="${t.theaterId }">
+<option value="${t.theaterId }" >
 ${t.theaterName }
 </option>
 </c:forEach>
@@ -29,9 +30,10 @@ ${t.theaterName }
 <label>日期</label>
 <input type="date" name="searchDate" value="${dateStr }">
 <label>時間</label>
-<input type="time" name="searchTime" value="${timeStr }">
+<input type="time" name="addedTime" value="${timeStr }">
 </fieldset>
 <button type="submit">搜尋</button>
+<label >${ message }</label>
 </form>
 <label>theaterName</label>
 <table style="border:3px solid black" border="3">

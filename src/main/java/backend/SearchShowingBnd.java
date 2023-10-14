@@ -1,6 +1,7 @@
 package backend;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -40,17 +41,19 @@ public class SearchShowingBnd extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		Integer addedMovieId = -1;
+		addedMovieId = ( request.getParameter("addedMovieId")==null)? -1: Integer.valueOf(request.getParameter("addedMovieId")); 
 		String theaterIdstr = request.getParameter("theaterId");
 		theaterIdstr = (theaterIdstr==null)? "8": theaterIdstr;
 		int theaterId = Integer.valueOf(theaterIdstr);
 		
 		String dateStr = request.getParameter("searchDate");
 		dateStr = (dateStr==null)?"2023-10-13": dateStr;
-		String timeStr = request.getParameter("searchTime");
-		timeStr = (timeStr==null)? "12:00:00": timeStr;
+		String timeStr = request.getParameter("addedTime");
+		
 //		System.out.println( this.getLocalDateTimeStr( request.getParameter("searchDate"),request.getParameter("searchTime")));
 		List<String> movieNameList = new ArrayList<String>();
-		List<LocalDateTime[]> intves = ShowingDAO.getShowingStEnd(theaterId,dateStr,timeStr,movieNameList);
+		List<LocalDateTime[]> intves = ShowingDAO.getShowingStEnd(theaterId,dateStr,movieNameList);
 		List<String[]> intvesStr = new ArrayList<String[]>();
 		for( LocalDateTime[] intv : intves) {
 			String [] tmp = new String[2];
@@ -58,7 +61,41 @@ public class SearchShowingBnd extends HttpServlet {
 			tmp[1] = intv[1].format( DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 			intvesStr.add(tmp);
 		}
-		request.setAttribute("selectTheaterId", theaterIdstr);
+		
+		if( timeStr == null || addedMovieId==-1) {
+			;// do not insert
+		}else {
+			// check conflict;?
+			Boolean conflict = false;
+			Time dur = MovieDAO.getMovie( addedMovieId).getMovieDuration();
+			LocalDateTime addedSt = LocalDateTime.parse(dateStr+"T"+timeStr , DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+			LocalDateTime addedEnd = addedSt.plusHours(dur.getHours());
+			addedEnd.plusMinutes(dur.getMinutes());
+			addedEnd.plusSeconds(dur.getSeconds());
+			for(  int i=0; i<intves.size() && conflict==false; i++) {
+				if(addedSt.isAfter(intves.get(i)[1]) || addedEnd.isBefore(intves.get(i)[0])) {
+					// no conflict
+					;
+				}
+				else{
+					conflict = true;
+				}
+			}
+			if( conflict == false) {				
+				int res= ShowingDAO.addShowing(addedMovieId,theaterId , dateStr, timeStr, 1);
+				request.setAttribute("message", (res>0)?"update success": "update failed");
+				intves = ShowingDAO.getShowingStEnd(theaterId,dateStr,movieNameList);
+				intvesStr = new ArrayList<String[]>();
+				for( LocalDateTime[] intv : intves) {
+					String [] tmp = new String[2];
+					tmp[0] = intv[0].format( DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+					tmp[1] = intv[1].format( DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+					intvesStr.add(tmp);
+				}
+			}
+		}
+		timeStr = (timeStr==null)? "12:00:00": timeStr;
+		request.setAttribute("selectTheaterId", (theaterIdstr==null)?0:Integer.valueOf(theaterIdstr));
 		request.setAttribute("selectMovieId", request.getParameter("movieId"));
 		request.setAttribute("allTheaters", TheaterDAO.getAllTheater());
 		request.setAttribute("allMovies", MovieDAO.getAllMovie());
