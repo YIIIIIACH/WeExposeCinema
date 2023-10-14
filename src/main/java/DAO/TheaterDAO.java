@@ -18,6 +18,7 @@ import bean.TheaterBean;
 public class TheaterDAO {
 	private static final String SEARCH_THEATER= " select * from theater where cinemaId_fk=?";
 	private static final String GET_THEATER = " select * from theater where theaterId in ( select theaterId_fk from showing where showingId=?)";
+	private static final String GET_ALL = " select * from theater";
 	public static List<TheaterBean> searchTheater( CinemaBean cinema){
 		// will return all the theater in that cinema
 		List<TheaterBean> res = new ArrayList<TheaterBean>(); 
@@ -74,5 +75,35 @@ public class TheaterDAO {
 			e.printStackTrace();
 		}
 		return tb;
+	}
+	public static List<TheaterBean> getAllTheater(){
+		List<TheaterBean> tbList = new ArrayList<TheaterBean>();
+		try {
+			Context context= new InitialContext();
+			DataSource ds = (DataSource)context.lookup("java:/comp/env/jdbc/servdb");
+			// get the list of theaterId of the cinemaId first;
+			Connection conn = ds.getConnection();
+			PreparedStatement pstm = conn.prepareStatement(GET_ALL);
+//			pstm.setInt(1, showingId);
+			ResultSet rs = pstm.executeQuery();
+			while( rs.next()) {
+				TheaterBean tb = new TheaterBean();
+				tb = new TheaterBean();
+				tb.setTheaterId(rs.getInt("theaterId"));
+				tb.setTheaterName(rs.getString("theaterName"));
+				tb.setCinemaId_fk(rs.getInt("cinemaId_fk"));
+				tbList.add(tb);
+			}
+			rs.close();
+			pstm.close();
+			conn.close();
+			context.close();
+		}catch(NamingException e) {
+			e.printStackTrace();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return tbList;
+		
 	}
 }

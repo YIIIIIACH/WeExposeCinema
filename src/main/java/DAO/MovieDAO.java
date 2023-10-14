@@ -21,7 +21,7 @@ public class MovieDAO {
 			"select * from movie where movieId in ("
 			+ " select movieId_fk from showing where showingId in ("
 			+"		select showingId_fk from booking where bookingId =? ))";
-	private static final String GET_MOVIE_SQL = "select * from movie";
+	private static final String GET_MOVIE_SQL = "select * from movie where movieId =?";
 	public static List<MovieBean> getAllMovie(){
 		List<MovieBean> res=null;
 		try {
@@ -111,7 +111,7 @@ public class MovieDAO {
 		}
 		return mb;
 	}
-	public static final MovieBean getMovie( Integer movieId) {
+	public static MovieBean getMovie( Integer movieId) {
 		MovieBean mb = null;
 		try {
 			Context context= new InitialContext();

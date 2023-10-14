@@ -5,6 +5,8 @@ import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.ServletException;
@@ -13,7 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import DAO.MovieDAO;
 import DAO.ShowingDAO;
+import DAO.TheaterDAO;
 
 /**
  * Servlet implementation class SearchShowingBnd
@@ -37,12 +41,32 @@ public class SearchShowingBnd extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String theaterIdstr = request.getParameter("theaterId");
-		Integer theaterId = (theaterIdstr==null)? -1: Integer.valueOf(theaterIdstr);
+		theaterIdstr = (theaterIdstr==null)? "8": theaterIdstr;
+		int theaterId = Integer.valueOf(theaterIdstr);
+		
 		String dateStr = request.getParameter("searchDate");
+		dateStr = (dateStr==null)?"2023-10-13": dateStr;
 		String timeStr = request.getParameter("searchTime");
+		timeStr = (timeStr==null)? "12:00:00": timeStr;
 //		System.out.println( this.getLocalDateTimeStr( request.getParameter("searchDate"),request.getParameter("searchTime")));
-		ShowingDAO.addShowing(4, theaterId, dateStr, timeStr, 1);
-		response.getWriter().append("Served at: ");
+		List<String> movieNameList = new ArrayList<String>();
+		List<LocalDateTime[]> intves = ShowingDAO.getShowingStEnd(theaterId,dateStr,timeStr,movieNameList);
+		List<String[]> intvesStr = new ArrayList<String[]>();
+		for( LocalDateTime[] intv : intves) {
+			String [] tmp = new String[2];
+			tmp[0] = intv[0].format( DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+			tmp[1] = intv[1].format( DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+			intvesStr.add(tmp);
+		}
+		request.setAttribute("selectTheaterId", theaterIdstr);
+		request.setAttribute("selectMovieId", request.getParameter("movieId"));
+		request.setAttribute("allTheaters", TheaterDAO.getAllTheater());
+		request.setAttribute("allMovies", MovieDAO.getAllMovie());
+		request.setAttribute("movieNameList", movieNameList);
+		request.setAttribute("dateStr", dateStr);
+		request.setAttribute( "timeStr"  , timeStr);
+		request.setAttribute("stEnds", intvesStr);
+		request.getRequestDispatcher("/AddShowingBnd.jsp").forward(request, response);
 	}
 
 	/**
